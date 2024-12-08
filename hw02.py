@@ -13,7 +13,7 @@ import re
 # повертає генератор, що ітерує по всіх дійсних числах у тексті
 # рекомендація - використовувати регулярні вирази для пошуку дійсних чисел в тексті
 def generator_numbers(text: str):
-    pattern = r"\s\d+.\d+\s"
+    pattern = r" \d+.\d+ "
     figures = re.findall(pattern, text)
     for val in figures:
         yield float(val.strip())

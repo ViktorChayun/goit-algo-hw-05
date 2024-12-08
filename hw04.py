@@ -9,9 +9,9 @@ from functools import wraps
 
 def input_error(func):
     @wraps(func)
-    def inner_func(args, contacts) -> str:
+    def inner_func(*args, **kwargs):
         try:
-            return func(args, contacts)
+            return func(*args, **kwargs)
         except KeyError:
             return "Invalid command"
         except ValueError:
@@ -22,17 +22,7 @@ def input_error(func):
             return f"Unexpected error: {e}"
     return inner_func
 
-def parsing_error(func):
-    @wraps(func)
-    def inner_func(user_input:str):
-        try:
-            return func(user_input)
-        except Exception as e:
-            print(f"Unexpected error: {e}")
-            return None, None
-    return inner_func
-
-@parsing_error
+@input_error
 def parse_input(user_input:str):
     cmd, *args = user_input.split()
     cmd = cmd.strip().lower()
